@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CasildaMart - Cart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5fff5;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .cart-item {
+            background: white;
+            padding: 20px;
+            margin: 15px auto;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .quantity {
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🛒 Your Cart</h1>
+
+<div th:if="${cartItems.isEmpty()}">
+    <p style="text-align:center;">Your cart is empty.</p>
+</div>
+
+<div class="cart-item" th:each="item : ${cartItems}">
+
+    <p>
+        Product ID:
+        <span th:text="${item.productId}">1</span>
+    </p>
+
+    <p class="quantity">
+        Quantity:
+        <span th:text="${item.quantity}">1</span>
+    </p>
+
+</div>
+
+<div class="back">
+    <a th:href="@{/products}">← Back to Products</a>
+</div>
+
+</body>
+</html>
