@@ -23,10 +23,10 @@ public class ProductController {
 
         List<Product> products;
 
-        if (search != null && !search.trim().isEmpty()) {
-            products = productRepository.findByNameContainingIgnoreCase(search);
-        } else {
+        if (search == null || search.trim().isEmpty()) {
             products = productRepository.findAll();
+        } else {
+            products = productRepository.findByNameContainingIgnoreCase(search);
         }
 
         model.addAttribute("products", products);
