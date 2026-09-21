@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin - CasildaMart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .admin-container {
+            max-width: 700px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .admin-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .admin-card h2 {
+            margin-top: 0;
+        }
+
+        .admin-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 18px;
+            background-color: #2e7d32;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .admin-button:hover {
+            background-color: #1b5e20;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <h1>CasildaMart Admin</h1>
+
+    <div class="admin-card">
+        <h2>Manage Products</h2>
+        <p>View and manage products in CasildaMart.</p>
+        <a href="/products" class="admin-button">
+            View Products
+        </a>
+    </div>
+
+    <div class="admin-card">
+        <h2>View Orders</h2>
+        <p>View customer orders stored in the system.</p>
+        <a href="/orders" class="admin-button">
+            View Orders
+        </a>
+    </div>
+
+    <div class="admin-card">
+        <h2>View Reviews</h2>
+        <p>View customer reviews.</p>
+        <a href="/reviews" class="admin-button">
+            View Reviews
+        </a>
+    </div>
+
+    <a href="/products" class="back">
+        Back to Products
+    </a>
+
+</div>
+
+</body>
+
+</html>
