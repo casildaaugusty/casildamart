@@ -24,7 +24,8 @@ public class CartController {
     public String addToCart(
             @RequestParam Long productId,
             @RequestParam String username,
-            @RequestParam int quantity) {
+            @RequestParam int quantity,
+            @RequestParam double price) {
 
         Cart existingCart = cartRepository.findByUsernameAndProductId(
                 username,
@@ -45,7 +46,9 @@ public class CartController {
             cartRepository.save(cart);
         }
 
-        return "redirect:/cart?username=" + username;
+        return "redirect:/cart?username=" + username
+                + "&productId=" + productId
+                + "&price=" + price;
     }
 
     @GetMapping("/cart")

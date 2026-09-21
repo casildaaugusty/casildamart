@@ -40,11 +40,22 @@
         .back-button {
             display: inline-block;
             margin-top: 20px;
+            margin-right: 10px;
             padding: 10px 18px;
             background-color: #333;
             color: white;
             text-decoration: none;
             border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -57,24 +68,49 @@
 
     <div class="cart-item">
 
-        <p><strong>Product ID:</strong> <span id="productId">3</span></p>
+        <p>
+            <strong>Product ID:</strong>
+            <span id="productId">3</span>
+        </p>
 
-        <p><strong>Product Name:</strong> <span id="productName">Product</span></p>
+        <p>
+            <strong>Product Name:</strong>
+            <span id="productName">Product</span>
+        </p>
 
-        <p><strong>Quantity:</strong> <span id="quantity">1</span></p>
+        <p>
+            <strong>Price:</strong>
+            ₹<span id="price">0</span>
+        </p>
+
+        <p>
+            <strong>Quantity:</strong>
+            <span id="quantity">1</span>
+        </p>
+
+        <p class="total">
+            <strong>Total Amount:</strong>
+            ₹<span id="total">0</span>
+        </p>
 
     </div>
 
     <a href="/products" class="back-button">Back to Products</a>
 
+    <a id="orderButton" href="/order" class="back-button">
+        Place Order
+    </a>
+
 </div>
 
 <script>
+
     const params = new URLSearchParams(window.location.search);
 
     const productId = params.get("productId");
     const productName = params.get("productName");
     const quantity = params.get("quantity");
+    const price = params.get("price");
 
     if (productId) {
         document.getElementById("productId").textContent = productId;
@@ -87,6 +123,28 @@
     if (quantity) {
         document.getElementById("quantity").textContent = quantity;
     }
+
+    if (price) {
+        document.getElementById("price").textContent = price;
+    }
+
+    const actualQuantity = Number(quantity || 1);
+    const actualPrice = Number(price || 0);
+
+    const total = actualPrice * actualQuantity;
+
+    document.getElementById("total").textContent =
+        total.toFixed(2);
+
+    const orderButton = document.getElementById("orderButton");
+
+    orderButton.href =
+        "/order?productId=" + (productId || "3") +
+        "&productName=" + encodeURIComponent(productName || "Product") +
+        "&quantity=" + actualQuantity +
+        "&price=" + actualPrice +
+        "&total=" + total;
+
 </script>
 
 </body>
