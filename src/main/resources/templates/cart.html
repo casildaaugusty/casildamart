@@ -1,68 +1,93 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CasildaMart - Cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - CasildaMart</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5fff5;
-            padding: 20px;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .cart-container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         h1 {
             text-align: center;
-            color: #2e7d32;
         }
 
         .cart-item {
-            background: white;
+            border: 1px solid #ddd;
             padding: 20px;
-            margin: 15px auto;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
-
-        .quantity {
-            font-weight: bold;
-        }
-
-        .back {
-            display: block;
-            text-align: center;
             margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .cart-item p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
         }
     </style>
 </head>
 
 <body>
 
-<h1>🛒 Your Cart</h1>
+<div class="cart-container">
 
-<div th:if="${cartItems.isEmpty()}">
-    <p style="text-align:center;">Your cart is empty.</p>
-</div>
+    <h1>Your Cart</h1>
 
-<div class="cart-item" th:each="item : ${cartItems}">
+    <div class="cart-item">
 
-    <p>
-        Product ID:
-        <span th:text="${item.productId}">1</span>
-    </p>
+        <p><strong>Product ID:</strong> <span id="productId">3</span></p>
 
-    <p class="quantity">
-        Quantity:
-        <span th:text="${item.quantity}">1</span>
-    </p>
+        <p><strong>Product Name:</strong> <span id="productName">Product</span></p>
+
+        <p><strong>Quantity:</strong> <span id="quantity">1</span></p>
+
+    </div>
+
+    <a href="/products" class="back-button">Back to Products</a>
 
 </div>
 
-<div class="back">
-    <a th:href="@{/products}">← Back to Products</a>
-</div>
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const productId = params.get("productId");
+    const productName = params.get("productName");
+    const quantity = params.get("quantity");
+
+    if (productId) {
+        document.getElementById("productId").textContent = productId;
+    }
+
+    if (productName) {
+        document.getElementById("productName").textContent = productName;
+    }
+
+    if (quantity) {
+        document.getElementById("quantity").textContent = quantity;
+    }
+</script>
 
 </body>
 </html>
