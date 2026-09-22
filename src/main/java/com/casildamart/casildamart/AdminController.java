@@ -24,4 +24,20 @@ public class AdminController {
 
         return "admin";
     }
+
+    @GetMapping("/admin/orders")
+    public String viewOrders(Model model) {
+
+        model.addAttribute("orders", orderRepository.findAll());
+
+        return "orders";
+    }
+
+    @GetMapping("/admin/reviews")
+    public String viewReviews(Model model) {
+
+        model.addAttribute("reviews", reviewRepository.findAll());
+
+        return "reviews";
+    }
 }
