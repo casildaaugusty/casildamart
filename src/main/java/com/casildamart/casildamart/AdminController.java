@@ -30,7 +30,7 @@ public class AdminController {
 
         model.addAttribute("orders", orderRepository.findAll());
 
-        return "orders";
+        return "admin-orders";
     }
 
     @GetMapping("/admin/reviews")
@@ -38,6 +38,6 @@ public class AdminController {
 
         model.addAttribute("reviews", reviewRepository.findAll());
 
-        return "reviews";
+        return "admin-reviews";
     }
 }

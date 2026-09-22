@@ -16,7 +16,7 @@ public class ReviewController {
 
     @GetMapping("/review")
     public String showReviewPage() {
-        return "review";
+        return "reviews";
     }
 
     @PostMapping("/review")
