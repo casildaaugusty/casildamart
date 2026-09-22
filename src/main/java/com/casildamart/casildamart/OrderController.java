@@ -1,6 +1,7 @@
 package com.casildamart.casildamart;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,17 @@ public class OrderController {
     }
 
     @GetMapping("/order")
-    public String showOrderPage() {
+    public String showOrderPage(
+            @RequestParam(required = false) String success,
+            Model model) {
+
+        if ("true".equals(success)) {
+            model.addAttribute(
+                    "successMessage",
+                    "Order placed successfully!"
+            );
+        }
+
         return "order";
     }
 
