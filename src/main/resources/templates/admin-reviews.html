@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Reviews - CasildaMart</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2e7d32;
+        }
+
+        .review {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Customer Reviews</h1>
+
+    <div th:if="${#lists.isEmpty(reviews)}">
+        <p style="text-align:center;">No reviews found.</p>
+    </div>
+
+    <div th:each="review : ${reviews}" class="review">
+
+        <p>
+            <strong>Username:</strong>
+            <span th:text="${review.username}"></span>
+        </p>
+
+        <p>
+            <strong>Product ID:</strong>
+            <span th:text="${review.productId}"></span>
+        </p>
+
+        <p>
+            <strong>Rating:</strong>
+            <span th:text="${review.rating}"></span>
+        </p>
+
+        <p>
+            <strong>Comment:</strong>
+            <span th:text="${review.comment}"></span>
+        </p>
+
+    </div>
+
+    <a href="/admin" class="back">Back to Admin</a>
+
+</div>
+
+</body>
+</html>
