@@ -17,8 +17,19 @@ public class OrderController {
 
     @GetMapping("/order")
     public String showOrderPage(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) Long productId,
+            @RequestParam(required = false) String productName,
+            @RequestParam(required = false) Integer quantity,
+            @RequestParam(required = false) Double total,
             @RequestParam(required = false) String success,
             Model model) {
+
+        model.addAttribute("username", username);
+        model.addAttribute("productId", productId);
+        model.addAttribute("productName", productName);
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("total", total);
 
         if ("true".equals(success)) {
             model.addAttribute(
@@ -47,6 +58,6 @@ public class OrderController {
 
         orderRepository.save(order);
 
-        return "redirect:/order?success=true";
+        return "redirect:/order?success=true&username=" + username;
     }
 }

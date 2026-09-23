@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Cart - CasildaMart</title>
 
     <style>
@@ -95,7 +97,9 @@
 
     </div>
 
-    <a href="/products" class="back-button">Back to Products</a>
+    <a href="/products" class="back-button">
+        Back to Products
+    </a>
 
     <a id="orderButton" href="/order" class="back-button">
         Place Order
@@ -111,6 +115,7 @@
     const productName = params.get("productName");
     const quantity = params.get("quantity");
     const price = params.get("price");
+    const username = params.get("username");
 
     if (productId) {
         document.getElementById("productId").textContent = productId;
@@ -139,7 +144,8 @@
     const orderButton = document.getElementById("orderButton");
 
     orderButton.href =
-        "/order?productId=" + (productId || "3") +
+        "/order?username=" + encodeURIComponent(username || "") +
+        "&productId=" + (productId || "3") +
         "&productName=" + encodeURIComponent(productName || "Product") +
         "&quantity=" + actualQuantity +
         "&price=" + actualPrice +
