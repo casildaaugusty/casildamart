@@ -1,6 +1,7 @@
 package com.casildamart.casildamart;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,27 +15,37 @@ public class ReviewController {
         this.reviewRepository = reviewRepository;
     }
 
-    @GetMapping("/review")
-    public String showReviewPage() {
+    // Show review page
+    @GetMapping("/reviews")
+    public String showReviewPage(
+            @RequestParam("productId") Long productId,
+            Model model) {
+
+        model.addAttribute("productId", productId);
+
+        model.addAttribute(
+                "reviews",
+                reviewRepository.findByProductId(productId)
+        );
+
         return "reviews";
     }
 
-    @PostMapping("/review")
+    // Save review
+    @PostMapping("/submit-review")
     public String submitReview(
-            @RequestParam String username,
-            @RequestParam Long productId,
-            @RequestParam int rating,
-            @RequestParam String comment) {
+            @RequestParam("productId") Long productId,
+            @RequestParam("rating") int rating,
+            @RequestParam("comment") String comment) {
 
-        Review review = new Review(
-                username,
-                productId,
-                rating,
-                comment
-        );
+        Review review = new Review();
+
+        review.setProductId(productId);
+        review.setRating(rating);
+        review.setComment(comment);
 
         reviewRepository.save(review);
 
-        return "redirect:/review?success=true";
+        return "redirect:/reviews?productId=" + productId;
     }
 }

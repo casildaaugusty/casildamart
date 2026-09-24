@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Review - CasildaMart</title>
+    <title>Reviews - CASILDAMART</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 40px;
+            padding: 0;
         }
 
-        .review-container {
-            width: 400px;
-            margin: auto;
-            background-color: white;
-            padding: 30px;
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 25px;
+            color: #333;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 30px;
         }
 
         label {
@@ -37,94 +42,121 @@
         }
 
         input,
-        textarea,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 15px;
         }
 
         textarea {
             height: 100px;
-            resize: none;
+            resize: vertical;
         }
 
-        button {
+        .submit-button {
             width: 100%;
-            margin-top: 25px;
+            margin-top: 20px;
             padding: 12px;
-            background-color: #2e7d32;
-            color: white;
             border: none;
             border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
             cursor: pointer;
         }
 
-        button:hover {
-            background-color: #1b5e20;
+        .submit-button:hover {
+            background-color: #218838;
         }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #333;
+        .review {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
         }
 
-        .success {
-            text-align: center;
-            color: green;
+        .customer {
             font-weight: bold;
-            margin-bottom: 15px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .rating {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .comment {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .no-reviews {
+            text-align: center;
+            color: #777;
+        }
+
+        .back-button {
+            display: block;
+            margin-top: 25px;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 
 <body>
 
-<div class="review-container">
+<div class="container">
 
-    <h1>Product Review</h1>
+    <h1>⭐ Product Reviews</h1>
 
-    <div id="successMessage" class="success"></div>
+    <h2>Write a Review</h2>
 
-    <form action="/review" method="post">
+    <form action="/submit-review" method="post">
 
-        <label for="username">Username</label>
+        <!-- Product ID -->
+        <input type="hidden"
+               name="productId"
+               th:value="${productId}">
+
+        <!-- Customer Username -->
+        <label for="username">Customer Username</label>
 
         <input type="text"
                id="username"
                name="username"
+               th:value="${username}"
+               placeholder="Enter your username"
                required>
 
-
-        <label for="productId">Product ID</label>
-
-        <input type="number"
-               id="productId"
-               name="productId"
-               required>
-
-
+        <!-- Rating -->
         <label for="rating">Rating</label>
 
-        <select id="rating"
-                name="rating"
-                required>
-
+        <select id="rating" name="rating" required>
             <option value="">Select Rating</option>
-            <option value="5">⭐⭐⭐⭐⭐ 5</option>
-            <option value="4">⭐⭐⭐⭐ 4</option>
-            <option value="3">⭐⭐⭐ 3</option>
-            <option value="2">⭐⭐ 2</option>
-            <option value="1">⭐ 1</option>
-
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="1">⭐</option>
         </select>
 
-
+        <!-- Comment -->
         <label for="comment">Comment</label>
 
         <textarea id="comment"
@@ -132,33 +164,51 @@
                   placeholder="Write your review..."
                   required></textarea>
 
-
-        <button type="submit">
+        <button type="submit" class="submit-button">
             Submit Review
         </button>
 
     </form>
 
-    <a href="/products" class="back">
-        Back to Products
+    <h2>Customer Reviews</h2>
+
+    <!-- Display Reviews -->
+    <div class="review"
+         th:each="review : ${reviews}">
+
+        <div class="customer">
+            👤 Customer:
+            <span th:text="${review.username}">
+                Customer Username
+            </span>
+        </div>
+
+        <div class="rating">
+            <span th:if="${review.rating == 5}">⭐⭐⭐⭐⭐</span>
+            <span th:if="${review.rating == 4}">⭐⭐⭐⭐</span>
+            <span th:if="${review.rating == 3}">⭐⭐⭐</span>
+            <span th:if="${review.rating == 2}">⭐⭐</span>
+            <span th:if="${review.rating == 1}">⭐</span>
+        </div>
+
+        <div class="comment"
+             th:text="${review.comment}">
+            Review comment
+        </div>
+
+    </div>
+
+    <!-- No Reviews -->
+    <p class="no-reviews"
+       th:if="${#lists.isEmpty(reviews)}">
+        No reviews yet. Be the first to review this product!
+    </p>
+
+    <a href="/products" class="back-button">
+        ← Back to Products
     </a>
 
 </div>
 
-
-<script>
-
-    const params = new URLSearchParams(window.location.search);
-
-    if (params.get("success") === "true") {
-
-        document.getElementById("successMessage").textContent =
-            "Review submitted successfully!";
-
-    }
-
-</script>
-
 </body>
-
 </html>
