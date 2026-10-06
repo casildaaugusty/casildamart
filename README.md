@@ -29,10 +29,27 @@ CASILDAMART is an online shopping web application built using Spring Boot, Java,
 - HTML
 - CSS
 - Thymeleaf
+- JPA / Hibernate
 - Maven
 
-## Project Description
+## Application Flow
 
-CASILDAMART is an e-commerce web application that allows users to register, log in, browse products, add products to their cart, place orders, and provide reviews.
+Register → Login → Products → Cart → Checkout → Place Order → Order Success
 
-The application also provides seller/admin features for adding, managing, deleting products and viewing orders.
+## Admin/Seller Flow
+
+Seller Login → Admin Dashboard → Add Product / Manage Products / View Orders
+
+## Project Structure
+
+- `src/main/java` – Java source code
+- `src/main/resources/templates` – HTML/Thymeleaf pages
+- `src/main/resources/application.properties` – Application configuration
+- `pom.xml` – Maven dependencies
+
+## How to Run
+
+Use the Maven wrapper:
+
+```bash
+./mvnw spring-boot:run
